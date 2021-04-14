@@ -1,6 +1,8 @@
 # импортируем библиотеки
+import os
 from flask import Flask, request
 import logging
+from waitress import serve
 
 # библиотека, которая нам понадобится для работы с JSON
 import json
@@ -12,6 +14,8 @@ import json
 # так как мы обращаемся к переменной из запущенного модуля.
 # если бы такое обращение, например,
 # произошло внутри модуля logging, то мы бы получили 'logging'
+
+
 app = Flask(__name__)
 
 # Устанавливаем уровень логирования
@@ -132,4 +136,5 @@ def get_suggests(user_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    serve(app, port=port, host="0.0.0.0")
